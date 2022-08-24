@@ -22,6 +22,7 @@
         </svg>
       </div>
     </div>
+    {{ config }}
     <div class="p-4">
       <p class="text-sm font-semibold">{{ message }}</p>
     </div>
@@ -36,6 +37,10 @@ const props = defineProps({
   }, message: {
     type: String,
     default: "This is a toast"
+  },
+  config:{
+    type: Object,
+    default: () => {}
   }
 })
 const computedClass = computed(() => {

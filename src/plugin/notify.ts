@@ -1,12 +1,12 @@
 import NotificationsContainer from '../components/NotificationsContainer.vue'
 import Notification from '../components/Notification.vue'
-import {createApp, h, ref} from "vue";
+import {createApp, h, reactive, ref} from "vue";
 let target = document.body
 const positionList = [
-    'top-0 left-0', 'top-0 right-0',
-    'bottom-0 left-0', 'bottom-0 right-0'
+    'top-left', 'top-right',
+    'bottom-left', 'bottom-right'
 ]
-
+let uid = 0
 const notifTypes = {
     positive: {
         icon: $q => $q.iconSet.type.positive,
@@ -37,18 +37,38 @@ const notifTypes = {
     }
 }
 
-let notificationList = ref([])
+let notificationList = {}
+const isObject = (v: any) => {
+    return v !== null && typeof v === 'object' && Array.isArray(v) !== true
+}
 
+/*
+* config = {
+* type,
+*   message,
+* position,
+* }
+* */
 
 export default {
     notify: (config) => {
-        notificationList.value.push(config)
+        // if(isObje)
+        console.log(config)
+        Object.assign(config, {uid})
+        // @ts-ignore
+        notificationList[config.position].value.push(config);
+        // notificationList.push(config)
+        uid++
     },
     install: () => {
         console.log('Installing the CommentsOverlay plugin!')
         const el = createGlobalNode('q-notify')
         // @ts-ignore
-        const vNode = h(NotificationsContainer, {positionList, notificationList:notificationList.value})
+        const vNode = h(NotificationsContainer, {positionList, notificationList})
+        positionList.forEach(pos => {
+            // @ts-ignore
+            notificationList[pos] = ref([])
+        })
         console.log(Notification)
         createApp(vNode).mount(el)
     }

@@ -27,7 +27,9 @@ const count = ref(2)
 const alertMe = () => {
   // console.log("me")
   const config = {
-    type: 'positive'
+    type: 'positive',
+    message: "Successful",
+    position: "top-left"
   }
   notify.notify(config)
 }
