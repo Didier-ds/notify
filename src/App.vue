@@ -1,6 +1,7 @@
 <template>
   <div>Hi There hbjnk</div>
   <Notification :count="count"/>
+  <inline-svg :src="'./vite.svg'"></inline-svg>
   <button @click="alertMe">Notify</button>
 </template>
 
@@ -18,12 +19,16 @@
 }
 </style>
 <script setup lang="ts">
+import InlineSvg from 'vue-inline-svg';
 import Notification from "./components/Notification.vue";
 import notify from "./plugin/notify";
 import {ref} from "vue";
 const count = ref(2)
 const alertMe = () => {
   // console.log("me")
-  notify.notify()
+  const config = {
+    type: 'positive'
+  }
+  notify.notify(config)
 }
 </script>
